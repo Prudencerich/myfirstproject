@@ -1,8 +1,11 @@
 from django.shortcuts import render
 
+<<<<<<< HEAD
 from item.models import Category, Item
 
 from django.forms import SignupForm
+=======
+>>>>>>> f1ae76f4e1bb0942d0975b8011123ce4072c107d
 
 def index(request):
     items = Item.objects.filter(is_sold=False)[0:6]

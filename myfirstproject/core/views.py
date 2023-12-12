@@ -1,11 +1,7 @@
-from django.shortcuts import render
-
-<<<<<<< HEAD
+from django.shortcuts import render, redirect
 from item.models import Category, Item
 
-from django.forms import SignupForm
-=======
->>>>>>> f1ae76f4e1bb0942d0975b8011123ce4072c107d
+from .form import SignupForm
 
 def index(request):
     items = Item.objects.filter(is_sold=False)[0:6]
@@ -20,7 +16,15 @@ def contact(request):
     return render(request, 'core/contact.html')
 
 def signup(request):
-    form = SignupForm()
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+
+            return redirect('/login/')
+    else:    
+        form = SignupForm()
 
     return render(request, 'core/signup.html', {
         'form': form

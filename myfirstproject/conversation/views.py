@@ -16,7 +16,7 @@ def new_conversation(request, item_pk):
     conversations = Conversation.objects.filter(item=item).filter(members__in=[request.user.id])
 
     if conversations:
-        pass # redirect to conversation
+        return redirect('conversation:detail', pk=conversations.first().id)
 
     if request.method == 'POST':
         form = ConversationMessageForm(request.POST)
@@ -66,10 +66,6 @@ def detail(request, pk):
             return redirect('conversation:detail', pk=pk)
     else:
             form = ConversationMessageForm()
-
-            return redirect(request, 'conversation/detail.html', {
-                'conversation': conversation
-            })
 
     return render(request, 'conversation/detail.html', {
         'conversation': conversation,
